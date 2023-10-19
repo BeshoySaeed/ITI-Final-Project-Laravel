@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -14,6 +17,9 @@ class UserController extends Controller
     public function index()
     {
         //
+        $user = User::all();
+
+        return UserResource::collection($user);
     }
 
     /**
@@ -22,6 +28,22 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            "email"=>"required",
+            "password"=>"required",
+            "first_name"=>"required",
+            "last_name"=>"required",
+
+        ]);
+
+        if($validator->fails()){
+            return response($validator->errors()->all(), 422);
+        }
+   
+        $user = User::create($request->all());
+        $user->save();
+
+        return (new UserResource($user))->response()->setStatusCode(201);  
     }
 
     /**
@@ -30,6 +52,8 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        return new UserResource($user);
+
     }
 
     /**
@@ -38,6 +62,21 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        $validator = Validator::make($request->all(), [
+            "email"=>"required",
+            "password"=>"required",
+            "first_name"=>"required",
+            "last_name"=>"required",
+        ]);
+   
+        
+        if($validator->fails()){
+            return response($validator->errors()->all(), 422);
+        }
+        
+        $user->update($request->all());
+
+        return new UserResource($user);
     }
 
     /**
@@ -46,5 +85,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        $user->delete();
+        return response("Deleted", 204);
     }
 }

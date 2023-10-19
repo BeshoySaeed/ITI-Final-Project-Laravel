@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\UserPhone;
+use App\Models\User;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserphoneResource;
+use Illuminate\Support\Facades\Validator;
 
 class UserphoneController extends Controller
 {
@@ -14,6 +18,9 @@ class UserphoneController extends Controller
     public function index()
     {
         //
+        $phone = UserPhone::all();
+
+        return UserphoneResource::collection($phone);
     }
 
     /**
@@ -22,6 +29,19 @@ class UserphoneController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            "phone"=> "required",
+            "user_id"=> "required"
+        ]);
+
+        if($validator->fails()){
+            return response($validator->errors()->all(), 422);
+        }
+   
+        $phone = UserPhone::create($request->all());
+        $phone->save();
+
+        return (new UserphoneResource($phone))->response()->setStatusCode(201);  
     }
 
     /**
@@ -30,6 +50,8 @@ class UserphoneController extends Controller
     public function show(UserPhone $userPhone)
     {
         //
+        return new UserphoneResource($userPhone);
+
     }
 
     /**
@@ -38,6 +60,19 @@ class UserphoneController extends Controller
     public function update(Request $request, UserPhone $userPhone)
     {
         //
+        $validator = Validator::make($request->all(), [
+            "phone"=> "required",
+          
+        ]);
+   
+        
+        if($validator->fails()){
+            return response($validator->errors()->all(), 422);
+        }
+        
+        $userPhone->update($request->all());
+
+        return new UserphoneResource($userPhone);
     }
 
     /**
@@ -46,5 +81,7 @@ class UserphoneController extends Controller
     public function destroy(UserPhone $userPhone)
     {
         //
+        $userPhone->delete();
+        return response("Deleted", 204);
     }
 }
