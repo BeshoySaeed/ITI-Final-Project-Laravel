@@ -45,7 +45,7 @@ class CustomerServicePhoneController extends Controller
         return response()->json([
             "data" => $customerServicePhone,
             'status' => 'success',
-            'message' => 'Customer service phone added successfully'
+            'message' => 'Customer service phone created successfully'
         ], 201);
     }
 
@@ -54,7 +54,10 @@ class CustomerServicePhoneController extends Controller
      */
     public function show(CustomerServicePhone $customerServicePhone)
     {
-        return $customerServicePhone;
+        return response()->json([
+            "data" => $customerServicePhone,
+            'status' => 'success',
+        ], 200);
     }
 
     /**
@@ -63,7 +66,7 @@ class CustomerServicePhoneController extends Controller
     public function update(Request $request, CustomerServicePhone $customerServicePhone)
     {
         $validator = Validator::make($request->all(), [
-            'phone'=>['required', "regex:/^(\+20-1)[0-9]{9}$/", Rule::unique('customer_service_phones')->ignore($customerServicePhone->phone)],
+            'phone'=>['required', "regex:/^(\+20-1)[0-9]{9}$/"],
             "active"=>"required"
         ]);
 
