@@ -11,6 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['id', 'name', 'img'];
 
 
     protected function items() : HasMany
