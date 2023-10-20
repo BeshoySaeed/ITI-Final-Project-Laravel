@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerServiceEmailController;
 use App\Http\Controllers\CustomerServicePhoneController;
+use App\Http\Controllers\FeedBackController;
 use App\Http\Controllers\SocialMediaAccountController;
 use App\Http\Controllers\UserFavouriteController;
 use Illuminate\Http\Request;
@@ -27,3 +28,4 @@ Route::apiResource('customer-service-emails', CustomerServiceEmailController::cl
 Route::apiResource('social-media-accounts', SocialMediaAccountController::class);
 Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index']);
 Route::apiResource('user-favourites', UserFavouriteController::class);
+Route::apiResource('feedbacks', FeedBackController::class);
