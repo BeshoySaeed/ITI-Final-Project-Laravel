@@ -12,9 +12,12 @@ use App\Models\Addition;
 class OrderItem extends Model
 {
     use HasFactory;
-
-
-
+    protected $fillable = 
+    ['item_id',
+     'quantity',
+     'order_id',
+    ];
+ 
     protected function orders(): HasMany
     {
         return $this->hasMany(Order::class);

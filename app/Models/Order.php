@@ -13,6 +13,16 @@ use App\Models\orderItems;
 class Order extends Model
 {
     use HasFactory;
+    protected $fillable = 
+    ['user_id',
+     'completed',
+     'note',
+    'payment_method',
+    'discount_code',
+    'confirm_instructions',
+    // 'phone_id',
+    // 'address_id',
+];
 
     protected function user () : BelongsTo
     {
