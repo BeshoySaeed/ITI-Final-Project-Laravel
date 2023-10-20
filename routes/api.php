@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerServiceEmailController;
 use App\Http\Controllers\CustomerServicePhoneController;
+use App\Http\Controllers\SocialMediaAccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('customer-service-phones', CustomerServicePhoneController::class);
 Route::apiResource('customer-service-emails', CustomerServiceEmailController::class);
+Route::apiResource('social-media-accounts', SocialMediaAccountController::class);

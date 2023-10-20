@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerServicePhone;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CustomerServicePhoneRequest;
-use App\Rules\PhoneRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CustomerServicePhoneController extends Controller
 {
@@ -30,7 +27,7 @@ class CustomerServicePhoneController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "phone" => ["required", "regex:/^(\+20-1)[0-9]{9}$/", Rule::unique('customer_service_phones')],
+            "phone" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
             "active"=>"required"
         ]);
 

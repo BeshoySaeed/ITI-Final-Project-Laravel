@@ -28,7 +28,7 @@ class CustomerServiceEmailController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'=>['required', "email", Rule::unique('customer_service_emails')],
+            'email'=>['required', "email"],
             "active"=>"required"
         ]);
 
