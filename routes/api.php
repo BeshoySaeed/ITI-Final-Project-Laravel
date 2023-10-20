@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerServiceEmailController;
 use App\Http\Controllers\CustomerServicePhoneController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FeedBackController;
 use App\Http\Controllers\SocialMediaAccountController;
 use App\Http\Controllers\SubscriptionPlanController;
@@ -31,3 +32,4 @@ Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index'
 Route::apiResource('user-favourites', UserFavouriteController::class);
 Route::apiResource('feedbacks', FeedBackController::class);
 Route::apiResource('subscription-plans', SubscriptionPlanController::class);
+Route::apiResource('employees', EmployeeController::class);
