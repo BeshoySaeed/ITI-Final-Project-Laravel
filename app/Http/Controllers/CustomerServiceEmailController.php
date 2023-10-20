@@ -35,7 +35,7 @@ class CustomerServiceEmailController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 "status"=> "failed",
-                "message"=> $validator->errors()
+                "message"=> $validator->errors()->all()
             ],422);
         }
 
@@ -71,7 +71,7 @@ class CustomerServiceEmailController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 "status"=> "failed",
-                "message"=> $validator->errors()
+                "message"=> $validator->errors()->all()
             ],422);
         }
 
