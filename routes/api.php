@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\BranchController;
+use App\Http\Controllers\Api\ContactUsController;
+use App\Http\Controllers\Api\JopApplicantController;
+use App\Http\Controllers\Api\PartnerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::apiResource('contact-us', ContactUsController::class);
+
+Route::apiResource("partners", PartnerController::class);
+
+Route::apiResource("jobApplicants", JopApplicantController::class);
+
+Route::apiResource("branches", BranchController::class);

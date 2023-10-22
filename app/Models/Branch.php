@@ -17,4 +17,10 @@ class Branch extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    protected $fillable = [
+        "name",
+        "address",
+        "address_location"
+    ];
  }

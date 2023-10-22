@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Partner extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        "first_name",
+        "last_name",
+        "email",
+        "subject",
+        "mobile",
+        "message"
+    ];
 }
