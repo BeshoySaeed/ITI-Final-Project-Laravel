@@ -21,6 +21,15 @@ class CustomerServicePhoneController extends Controller
         ], 200);
     }
 
+    public function activePhones()
+    {
+        $customerServicePhone = CustomerServicePhone::where('active', 'active')->get();
+        return response()->json([
+            "data" => $customerServicePhone,
+            'status' => 'success',
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
