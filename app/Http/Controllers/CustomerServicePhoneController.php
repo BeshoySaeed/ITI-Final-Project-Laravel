@@ -23,7 +23,7 @@ class CustomerServicePhoneController extends Controller
 
     public function activePhones()
     {
-        $customerServicePhone = CustomerServicePhone::where('active', 'active')->get();
+        $customerServicePhone = CustomerServicePhone::where('active', '1')->get();
         return response()->json([
             "data" => $customerServicePhone,
             'status' => 'success',
