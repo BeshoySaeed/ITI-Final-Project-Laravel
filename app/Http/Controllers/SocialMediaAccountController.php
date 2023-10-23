@@ -16,7 +16,7 @@ class SocialMediaAccountController extends Controller
     {
         $socialMediaAccount = SocialMediaAccount::all();
         return response()->json([
-            "date" => $socialMediaAccount,
+            "data" => $socialMediaAccount,
             "status" => "success"
         ], 200);
     }
