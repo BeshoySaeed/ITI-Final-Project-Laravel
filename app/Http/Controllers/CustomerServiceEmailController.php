@@ -22,6 +22,15 @@ class CustomerServiceEmailController extends Controller
         ], 200);
     }
 
+    public function activeEmails()
+    {
+        $customerServiceEmail = CustomerServiceEmail::where('active', '1')->get();
+        return response()->json([
+            "data" => $customerServiceEmail,
+            'status' => 'success',
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

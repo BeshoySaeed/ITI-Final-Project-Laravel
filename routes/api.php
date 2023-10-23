@@ -27,7 +27,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('customer-service-phones', CustomerServicePhoneController::class);
 Route::get('customer-service-active-phones', [CustomerServicePhoneController::class, 'activePhones']);
+
 Route::apiResource('customer-service-emails', CustomerServiceEmailController::class);
+Route::get('customer-service-active-emails', [CustomerServiceEmailController::class, 'activeEmails']);
+
 Route::apiResource('social-media-accounts', SocialMediaAccountController::class);
 Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index']);
 Route::apiResource('user-favourites', UserFavouriteController::class);
