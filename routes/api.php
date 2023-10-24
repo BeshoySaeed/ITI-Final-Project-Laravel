@@ -4,6 +4,13 @@ use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\JopApplicantController;
 use App\Http\Controllers\Api\PartnerController;
+use App\Http\Controllers\CustomerServiceEmailController;
+use App\Http\Controllers\CustomerServicePhoneController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FeedBackController;
+use App\Http\Controllers\SocialMediaAccountController;
+use App\Http\Controllers\SubscriptionPlanController;
+use App\Http\Controllers\UserFavouriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +37,16 @@ Route::apiResource("partners", PartnerController::class);
 Route::apiResource("jobApplicants", JopApplicantController::class);
 
 Route::apiResource("branches", BranchController::class);
+
+Route::apiResource('customer-service-phones', CustomerServicePhoneController::class);
+Route::get('customer-service-active-phones', [CustomerServicePhoneController::class, 'activePhones']);
+
+Route::apiResource('customer-service-emails', CustomerServiceEmailController::class);
+Route::get('customer-service-active-emails', [CustomerServiceEmailController::class, 'activeEmails']);
+
+Route::apiResource('social-media-accounts', SocialMediaAccountController::class);
+Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index']);
+Route::apiResource('user-favourites', UserFavouriteController::class);
+Route::apiResource('feedbacks', FeedBackController::class);
+Route::apiResource('subscription-plans', SubscriptionPlanController::class);
+Route::apiResource('employees', EmployeeController::class);

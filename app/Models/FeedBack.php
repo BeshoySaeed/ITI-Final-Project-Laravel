@@ -11,7 +11,7 @@ use App\Models\User;
 class FeedBack extends Model
 {
     use HasFactory;
-
+    protected $fillable = ["user_id", "rate_value", "rate_comment"];
 
     protected function user() : BelongsTo
     {

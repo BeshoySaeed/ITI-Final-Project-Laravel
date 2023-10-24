@@ -10,9 +10,9 @@ use App\Models\Branch;
 class Employee extends Model
 {
     use HasFactory;
+    protected $fillable = ['first_name', 'last_name', 'job_title', 'email', 'phone', 'national_id', 'street', 'area', 'city', 'salary', 'joined_at', 'branch_id'];
 
-
-    protected function branch() :BelongsTo
+    protected function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
