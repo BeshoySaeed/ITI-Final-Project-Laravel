@@ -19,7 +19,17 @@ use App\Http\Controllers\api\ItemController;
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\OrderItemController;
 use App\Http\Controllers\api\ItemAdditionController;
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\RoleController;
+use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\UserphoneController;
+use App\Http\Controllers\api\UserAddressController;
 
+use App\Models\Category;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\UserPhone;
+use App\Models\UserAddress;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,3 +73,10 @@ Route::resource('order',OrderController::class);
 Route::resource('orderItem',OrderItemController::class);
 Route::resource('itemAddition',ItemAdditionController::class);
 Route::resource('discountCode',DiscountCodeController::class);
+
+
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('roles', RoleController::class);
+Route::apiResource('users', UserController::class);
+Route::apiResource('userPhone', UserphoneController::class);
+Route::apiResource('userAddress', UserAddressController::class);
