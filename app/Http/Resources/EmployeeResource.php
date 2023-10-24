@@ -29,7 +29,9 @@ class EmployeeResource extends JsonResource
             "city" => $this->city,
             "salary" => $this->salary,
             "joined_at" => $this->joined_at,
-            "branchName" => $branch ? $branch->name : null
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
+            "branch_name" => $branch ? $branch->name : null
         ];
     }
 }
