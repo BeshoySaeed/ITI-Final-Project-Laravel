@@ -13,6 +13,12 @@ use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\UserFavouriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\AdditionController;
+use App\Http\Controllers\api\DiscountCodeController;
+use App\Http\Controllers\api\ItemController;
+use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\OrderItemController;
+use App\Http\Controllers\api\ItemAdditionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +56,10 @@ Route::apiResource('user-favourites', UserFavouriteController::class);
 Route::apiResource('feedbacks', FeedBackController::class);
 Route::apiResource('subscription-plans', SubscriptionPlanController::class);
 Route::apiResource('employees', EmployeeController::class);
+
+Route::resource('addition',AdditionController::class);
+Route::resource('item',ItemController::class);
+Route::resource('order',OrderController::class);
+Route::resource('orderItem',OrderItemController::class);
+Route::resource('itemAddition',ItemAdditionController::class);
+Route::resource('discountCode',DiscountCodeController::class);

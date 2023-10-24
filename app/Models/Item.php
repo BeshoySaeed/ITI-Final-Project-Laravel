@@ -14,7 +14,7 @@ use App\Models\User;
 class Item extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name', 'img', 'price','description','discount','active','category_id'];
 
     protected function category() : BelongsTo
     {
