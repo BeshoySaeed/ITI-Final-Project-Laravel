@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FeedBack;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FeedBackResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,7 @@ class FeedBackController extends Controller
     {
         $feedBack = FeedBack::all();
         return response()->json([
-            "data" => $feedBack,
+            'data' => FeedBackResource::collection($feedBack),
             'status' => 'success',
         ], 200);
     }
