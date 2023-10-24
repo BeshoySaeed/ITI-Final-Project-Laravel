@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EmployeeResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::all();
         return response()->json([
-            "data" => $employee,
+            'data' => EmployeeResource::collection($employee),
             'status' => 'success',
         ], 200);
     }
