@@ -63,7 +63,6 @@ class SocialMediaAccountController extends Controller
     public function update(Request $request, SocialMediaAccount $socialMediaAccount)
     {
         $validator = Validator::make($request->all(), [
-            "name" => ['required'],
             "link" => ['required', 'regex:/^https:\/\//i']
         ]);
 
