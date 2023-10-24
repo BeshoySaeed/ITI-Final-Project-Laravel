@@ -45,6 +45,7 @@ class UserAddressController extends Controller
         }
    
         $address = UserAddress::create($request->all());
+       // $address->user_id = Auth::id();   
         $address->save();
 
         return (new UserAddressResource($address))->response()->setStatusCode(201);  
