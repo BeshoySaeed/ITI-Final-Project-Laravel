@@ -64,7 +64,10 @@ Route::apiResource('social-media-accounts', SocialMediaAccountController::class)
 Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index']);
 Route::apiResource('user-favourites', UserFavouriteController::class);
 Route::apiResource('feedbacks', FeedBackController::class);
+
 Route::apiResource('subscription-plans', SubscriptionPlanController::class);
+Route::get('subscription-plans-active', [SubscriptionPlanController::class, 'activeSubscriptions']);
+
 Route::apiResource('employees', EmployeeController::class);
 
 Route::resource('addition',AdditionController::class);
