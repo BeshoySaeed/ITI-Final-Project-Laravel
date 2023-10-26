@@ -39,7 +39,8 @@ class UserphoneController extends Controller
         }
    
         $phone = UserPhone::create($request->all());
-        $phone->save();
+       // $phone->user_id = Auth::id();   
+       $phone->save();
 
         return (new UserphoneResource($phone))->response()->setStatusCode(201);  
     }
