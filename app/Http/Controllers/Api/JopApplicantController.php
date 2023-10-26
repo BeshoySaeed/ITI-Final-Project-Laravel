@@ -7,7 +7,7 @@ use App\Http\Resources\JobApplicantResource;
 use App\Models\JopApplicant;
 use Illuminate\Http\Request;
 
-class JopApplicantControl  extends Controller
+class JopApplicantController  extends Controller
 {
     /**
      * Display a listing of the resource.
