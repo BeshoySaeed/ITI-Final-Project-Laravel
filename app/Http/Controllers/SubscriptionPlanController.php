@@ -21,6 +21,15 @@ class SubscriptionPlanController extends Controller
         ], 200);
     }
 
+    public function activeSubscriptions()
+    {
+        $subscriptionPlan = SubscriptionPlan::where('active', '1')->get();
+        return response()->json([
+            "data" => $subscriptionPlan,
+            'status' => 'success',
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
