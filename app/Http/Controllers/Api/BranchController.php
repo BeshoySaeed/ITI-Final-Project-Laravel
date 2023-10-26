@@ -14,9 +14,10 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::paginate(10);
+        // $branches = Branch::paginate(10);
+        $branches = Branch::all();
 
-        return BranchResource::collection($branches);
+        return $branches;
     }
 
     public function store(Request $request)
@@ -29,7 +30,7 @@ class BranchController extends Controller
         ]);
 
         $newClient = Branch::create($request->all());
-        return new BranchResource($newClient);
+        return $newClient;
     }
 
 
@@ -45,8 +46,24 @@ class BranchController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Branch $branch)
+    public function getBranchById( $id)
+
     {
+        $branch= Branch::find($id);
+        
+
+        return $branch;
+    }
+
+
+    // public function update(Request $request, Branch $branch)
+    public function update(Request $request,  $id)
+
+    {
+        $branch= Branch::find($id);
+        if(is_null($branch)){
+            return response()->json(['message'=>'branch not found'],404);
+        }
         $request->validate([
             'name' => ['sometimes', 'required', 'min:3', 'max:255'],
             'address' => ['sometimes', 'required', 'min:3', 'max:255'],
@@ -55,7 +72,8 @@ class BranchController extends Controller
 
         $branch->update($request->all());
 
-        return response()->json($branch);
+        // return response()->json($branch);
+        return $branch;
     }
 
 

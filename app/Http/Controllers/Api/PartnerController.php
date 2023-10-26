@@ -14,24 +14,26 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $branches = Partner::paginate(10);
-        return PartnerResource::collection($branches);
-    }
 
+        // $branches = Partner::paginate(10);
+        $partner = Partner::all();
+        return $partner;
+
+
+    }
     public function store(Request $request)
     {
         $request->validate([
             "first_name" => "required|min:3|max:255",
             "last_name" => "required|min:3|max:255",
-            "email" => "required|email|unique:partners,email,except,id",
-            "subject" => "required",
+            "email" => "required",
             "mobile" => "required",
             "message" => "required",
         ]);
-        $newClient = Partner::create($request->all());
-        return new PartnerResource($newClient);
+        $partner = Partner::create($request->all());
+        return response()->json($partner, 201);
     }
-
+   
     public function show(Partner $partner)
     {
         if (!$partner) {
