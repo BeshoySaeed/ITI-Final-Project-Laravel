@@ -23,7 +23,7 @@ class DiscountCodeController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {      
+    {
     $validator = Validator::make($request->all(), [
         "code"=>"required",
         "percent"=>"required",
@@ -33,8 +33,8 @@ class DiscountCodeController extends Controller
     if($validator->fails()){
         return response($validator->errors()->all(), 422);
     }
-    $discount = DiscountCode::create($request->all());
-    return new DiscountCodeResource ($discount);
+     $discount = DiscountCode::create($request->all());
+     return new DiscountCodeResource ($discount);
     }
 
     /**

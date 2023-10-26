@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('percent');
-            $table->enum('active', [true, false]);
-            // $table->string('item_addition');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

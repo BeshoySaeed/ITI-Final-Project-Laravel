@@ -31,7 +31,7 @@ class ItemController extends Controller
             "description"=>"required",
             "discount"=>"required",
             "category_id"=>"required",
-            "active"=>"required|in: 0,1 ",
+            "active"=>"",
         ]);
 
         if($validator->fails()){

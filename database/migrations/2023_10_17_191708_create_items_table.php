@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('description');
             $table->string('discount')->nullable();
-            $table->enum('active',[true, false]);
-
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
