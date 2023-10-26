@@ -10,13 +10,12 @@ class JopApplicant extends Model
     use HasFactory;
 
     protected $fillable = [
+        "title",
         "first_name",
         "last_name",
-        "address",
-        "address_location",
-        "education",
+        "email",
         "mobile",
-        "name",
+        "education",
         "cv"
     ];
 }

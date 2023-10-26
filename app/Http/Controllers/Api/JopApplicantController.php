@@ -14,9 +14,9 @@ class JopApplicantControl  extends Controller
      */
     public function index()
     {
-        $branches = JopApplicant::paginate(10);
-
-        return JobApplicantResource::collection($branches);
+        // $branches = JopApplicant::paginate(10);
+        $branches = JopApplicant::all();
+            return $branches;
     }
 
 
@@ -25,16 +25,16 @@ class JopApplicantControl  extends Controller
         $request->validate([
             "first_name" => "required|min:3|max:255",
             "last_name" => "required|min:3|max:255",
-            "email" => "required|email|unique:job_applicants,email,except,id",
-            "job_title" => "required",
+            "email" => "required",
+            "title" => "required",
             "education" => "required",
             "mobile" => "required",
-            "name" => "required",
+            "cv"=>"required"
 
         ]);
 
         $newJobOffer = JopApplicant::create($request->all());
-        return new JobApplicantResource($newJobOffer);
+        return $newJobOffer;
     }
 
     public function show(JopApplicant $jopApplicant)
@@ -59,8 +59,6 @@ class JopApplicantControl  extends Controller
             "job_title" => "sometimes|required",
             "education" => "sometimes|required",
             "mobile" => "sometimes|required",
-            "name" => "sometimes|required",
-
         ]);
 
         $jopApplicant->update($request->all());

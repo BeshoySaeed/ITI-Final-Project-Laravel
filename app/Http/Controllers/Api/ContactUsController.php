@@ -12,10 +12,13 @@ class ContactUsController extends Controller
 
     public function index()
     {
-        $contactUsData = ContactUs::paginate(4);
+        // $contactUsData = ContactUs::paginate(4);
 
-        return ContactUsResource::collection($contactUsData);
+        $contactUsData = ContactUs::all();
+        return $contactUsData;
+   
     }
+
 
     /**
      * Store a newly created resource in storage.
