@@ -15,7 +15,7 @@ class FeedBackResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = new UserResource($this->user);
-        
+
         return [
             "id" => $this->id,
             "rate_value" => $this->rate_value,

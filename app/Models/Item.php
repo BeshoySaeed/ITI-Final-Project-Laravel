@@ -23,7 +23,7 @@ class Item extends Model
 
     public function additions()
     {
-        return $this->belongsToMany(Addition::class);
+        return $this->hasMany(ItemAddition::class);
     }
 
     public function orders()
