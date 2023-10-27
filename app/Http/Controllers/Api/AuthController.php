@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -20,7 +21,8 @@ class AuthController extends Controller
             "first_name" => "required|min:2|max:15",
             "last_name" => "required|min:2|max:15",
             "phone1" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
-            "phone2" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"]
+            "phone2" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
+            "device_name" => "required|max:15",
         ]);
 
         if ($validator->fails()) {
@@ -44,9 +46,7 @@ class AuthController extends Controller
         $this->storeUserPhone($request->phone2, $user->id);
 
 
-        $token = $user->createToken('API TOKEN')->plainTextToken;
-
-        $user->update(['remember_token' => $token]);
+        $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->json([
             "token" => $token,
@@ -72,6 +72,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             "email" => "required|email|min:5|max:50",
             "password" => ["required", "min:2", "max:50"],
+            "device_name" => "required|max:15",
         ]);
 
         if ($validator->fails()) {
@@ -90,8 +91,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        $token = $user->createToken('API TOKEN')->plainTextToken;
-        $user->update(['remember_token' => $token]);
+        $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->json([
             "token" => $token,
@@ -123,13 +123,16 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $user = User::where('remember_token', $request->token)->first();
-        if ($user) {
-            $user->update(['remember_token' => null]);
+        $user = $request->user();
+
+        $personalAccessToken = PersonalAccessToken::findToken($request->token);
+        if($user->id == $personalAccessToken->tokenable_id && get_class($user) == $personalAccessToken->tokenable_type) {
+            $personalAccessToken->delete();
+            
             return response()->json([
                 'status' => 'success',
                 'message' => 'User logged out successfully'
-            ], 200);
+            ], 400);
         }
 
         return response()->json([

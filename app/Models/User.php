@@ -33,7 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'balance',
-        'remember_token'
+        'device_name'
     ];
 
     /**
