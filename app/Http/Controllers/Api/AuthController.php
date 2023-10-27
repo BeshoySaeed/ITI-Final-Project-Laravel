@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\UserPhone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +44,7 @@ class AuthController extends Controller
         $this->storeUserPhone($request->phone2, $user->id);
 
 
-        $token = $user->createToken('token-name')->plainTextToken;
+        $token = $user->createToken('API TOKEN')->plainTextToken;
 
         $user->update(['remember_token' => $token]);
 
@@ -68,21 +69,43 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "email" => "required|email|min:5|max:50",
+            "password" => ["required", "min:2", "max:50"],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $validator->errors()->all()
+            ], 422);
+        }
+
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Invalid email or password'
+            ], 401);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        $token = $user->createToken('API TOKEN')->plainTextToken;
+        $user->update(['remember_token' => $token]);
+
+        return response()->json([
+            "token" => $token,
+            "user_id" => $user->id,
+            "role_id" => $user->role_id,
+            'status' => 'success',
+            'message' => 'User registered successfully'
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
     {
         //
     }
