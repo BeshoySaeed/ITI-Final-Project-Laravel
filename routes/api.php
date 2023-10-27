@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\JopApplicantController;
@@ -40,6 +41,11 @@ use App\Models\UserAddress;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
