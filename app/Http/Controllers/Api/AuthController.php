@@ -98,8 +98,20 @@ class AuthController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function logout(User $user)
+    public function logout(Request $request)
     {
-        //
+        $user = User::where('remember_token', $request->token)->first();
+        if ($user) {
+            $user->update(['remember_token' => null]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User logged out successfully'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'failed',
+            'message' => 'User is not logged in'
+        ], 400);
     }
 }
