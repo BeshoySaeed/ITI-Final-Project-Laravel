@@ -34,6 +34,7 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => 1
         ]);
 
         $user->save();
@@ -48,6 +49,8 @@ class AuthController extends Controller
 
         return response()->json([
             "token" => $token,
+            "user_id" => $user->id,
+            "role_id" => $user->role_id,
             'status' => 'success',
             'message' => 'User registered successfully'
         ], 201);
