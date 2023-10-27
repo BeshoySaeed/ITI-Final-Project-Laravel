@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->enum('completed',[true, false]);
+            $table->boolean('completed');
             $table->string('note')->nullable();
             $table->string('payment_method');
             $table->string('discount_code')->nullable();
             $table->string('confirm_instructions');
+            $table->string("street");
+            $table->string("area");
+            $table->string("city");
+            $table->string("building_name");
+            $table->string("floor_number");
+            $table->string("flat_number");
+            $table->string("GPS_location");
             $table->timestamps();
         });
     }
