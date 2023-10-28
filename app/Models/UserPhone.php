@@ -12,8 +12,9 @@ class UserPhone extends Model
     use HasFactory;
 
     protected $fillable = ['id', 'user_id','phone'];
-
+    
     protected $with = ['user'];
+
 
     public function user(): BelongsTo
     {
