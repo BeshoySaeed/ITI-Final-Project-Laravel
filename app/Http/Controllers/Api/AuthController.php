@@ -21,8 +21,7 @@ class AuthController extends Controller
             "first_name" => "required|min:2|max:15",
             "last_name" => "required|min:2|max:15",
             "phone1" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
-            "phone2" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
-            "device_name" => "required|max:15",
+            "phone2" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"]
         ]);
 
         if ($validator->fails()) {
@@ -46,7 +45,7 @@ class AuthController extends Controller
         $this->storeUserPhone($request->phone2, $user->id);
 
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken('API TOKEN')->plainTextToken;
 
         return response()->json([
             "token" => $token,
@@ -71,8 +70,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "email" => "required|email|min:5|max:50",
-            "password" => ["required", "min:2", "max:50"],
-            "device_name" => "required|max:15",
+            "password" => ["required", "min:2", "max:50"]
         ]);
 
         if ($validator->fails()) {
@@ -91,7 +89,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken('API TOKEN')->plainTextToken;
 
         return response()->json([
             "token" => $token,
