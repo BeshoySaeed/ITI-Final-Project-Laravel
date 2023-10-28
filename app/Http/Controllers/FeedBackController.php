@@ -13,6 +13,13 @@ class FeedBackController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware("auth:sanctum");
+        $this->middleware("is_admin")->only('index');
+    }
+
     public function index()
     {
         $feedBack = FeedBack::all();

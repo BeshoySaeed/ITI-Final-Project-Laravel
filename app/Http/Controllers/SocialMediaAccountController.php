@@ -12,6 +12,12 @@ class SocialMediaAccountController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware("is_admin")->except('index');
+    }
+
     public function index()
     {
         $socialMediaAccount = SocialMediaAccount::all();

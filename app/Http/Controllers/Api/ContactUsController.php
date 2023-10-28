@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class ContactUsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware("is_admin")->except('store');
+    }
+
     public function index()
     {
         // $contactUsData = ContactUs::paginate(4);

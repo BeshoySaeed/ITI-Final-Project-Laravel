@@ -12,6 +12,12 @@ class JopApplicantController  extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware("is_admin")->except('store');
+    }
+
     public function index()
     {
         // $branches = JopApplicant::paginate(10);

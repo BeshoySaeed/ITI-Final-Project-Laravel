@@ -61,32 +61,32 @@ Route::apiResource("jobApplicants", JopApplicantController::class);
 
 Route::apiResource("branches", BranchController::class);
 
-Route::apiResource('customer-service-phones', CustomerServicePhoneController::class);
+Route::apiResource('customer-service-phones', CustomerServicePhoneController::class)->middleware('is_admin');
 Route::get('customer-service-active-phones', [CustomerServicePhoneController::class, 'activePhones']);
 
-Route::apiResource('customer-service-emails', CustomerServiceEmailController::class);
+Route::apiResource('customer-service-emails', CustomerServiceEmailController::class)->middleware('is_admin');
 Route::get('customer-service-active-emails', [CustomerServiceEmailController::class, 'activeEmails']);
 
 Route::apiResource('social-media-accounts', SocialMediaAccountController::class);
-Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index']);
-Route::apiResource('user-favourites', UserFavouriteController::class);
+Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index'])->middleware("auth:sanctum");
+Route::apiResource('user-favourites', UserFavouriteController::class)->middleware("auth:sanctum");
 Route::apiResource('feedbacks', FeedBackController::class);
 
-Route::apiResource('subscription-plans', SubscriptionPlanController::class);
+Route::apiResource('subscription-plans', SubscriptionPlanController::class)->middleware("is_admin");
 Route::get('subscription-plans-active', [SubscriptionPlanController::class, 'activeSubscriptions']);
 
-Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('employees', EmployeeController::class)->middleware("is_admin");
 
-Route::resource('addition',AdditionController::class);
+Route::resource('addition',AdditionController::class)->middleware("is_admin");
 Route::resource('item',ItemController::class);
 Route::resource('order',OrderController::class);
-Route::resource('orderItem',OrderItemController::class);
+Route::resource('orderItem',OrderItemController::class)->middleware("auth:sanctum");
 Route::resource('itemAddition',ItemAdditionController::class);
-Route::resource('discountCode',DiscountCodeController::class);
+Route::resource('discountCode',DiscountCodeController::class)->middleware("is_admin");
 
 
 Route::apiResource('categories', CategoryController::class);
-Route::apiResource('roles', RoleController::class);
+Route::apiResource('roles', RoleController::class)->middleware("is_admin");
 Route::apiResource('users', UserController::class);
-Route::apiResource('userPhone', UserphoneController::class);
-Route::apiResource('userAddress', UserAddressController::class);
+Route::apiResource('userPhone', UserphoneController::class)->middleware("auth:sanctum");
+Route::apiResource('userAddress', UserAddressController::class)->middleware("auth:sanctum");
