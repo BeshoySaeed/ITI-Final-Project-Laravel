@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     protected function addresses() : HasMany
     {
-        return $this->hasMany(UserPhone::class);
+        return $this->hasMany(UserAddress::class);
     }
 
     protected function orders(): HasMany
