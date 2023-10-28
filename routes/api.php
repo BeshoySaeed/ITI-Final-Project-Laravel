@@ -88,5 +88,5 @@ Route::resource('discountCode',DiscountCodeController::class)->middleware("is_ad
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('roles', RoleController::class)->middleware("is_admin");
 Route::apiResource('users', UserController::class);
-Route::apiResource('userPhone', UserphoneController::class)->middleware("auth:sanctum");
-Route::apiResource('userAddress', UserAddressController::class)->middleware("auth:sanctum");
+Route::apiResource('userPhone', UserphoneController::class);
+Route::apiResource('userAddress', UserAddressController::class);
