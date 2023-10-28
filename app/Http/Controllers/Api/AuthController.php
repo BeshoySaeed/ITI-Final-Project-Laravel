@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -89,9 +89,15 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+        if($user->role_id==2){
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'your r not user'
+            ], 401);
+        }
 
         $token = $user->createToken('API TOKEN')->plainTextToken;
-        $user->update(['remember_token' => $token]);
+        // $user->update(['remember_token' => $token]);
 
         return response()->json([
             "token" => $token,
@@ -121,20 +127,32 @@ class AuthController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function logout(Request $request)
+    public function logout($token = null)
     {
-        $user = User::where('remember_token', $request->token)->first();
-        if ($user) {
-            $user->update(['remember_token' => null]);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'User logged out successfully'
-            ], 200);
-        }
+        // $user = User::where('remember_token', $request->token)->first();
+        // if ($user) {
+        //     $user->update(['remember_token' => null]);
+        //     return response()->json([
+        //         'status' => 'success',
+        //         'message' => 'User logged out successfully'
+        //     ], 200);
+        // }
 
-        return response()->json([
-            'status' => 'failed',
-            'message' => 'User is not logged in'
-        ], 400);
+        // return response()->json([
+        //     'status' => 'failed',
+        //     'message' => 'User is not logged in'
+        // ], 400);
+        $user = Auth::guard('sanctum')->user();
+        if(null===$token)
+        {
+            $user->currentAccessToken()->delete() ;
+            return ;
+        }
+        $personalAccessToken = PersonalAccessToken::findToken($token);
+
+        if ($user->id == $personalAccessToken->tokenable_id && 
+        get_class($user) == $personalAccessToken->tokenable_type) {
+            $personalAccessToken->delete();
+        }
     }
 }

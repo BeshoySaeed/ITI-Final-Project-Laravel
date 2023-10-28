@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\JopApplicantController;
@@ -45,7 +45,7 @@ use App\Models\UserAddress;
 Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('login', 'login');
-    Route::post('logout', 'logout');
+    // Route::post('logout', 'logout');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -90,3 +90,5 @@ Route::apiResource('roles', RoleController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('userPhone', UserphoneController::class);
 Route::apiResource('userAddress', UserAddressController::class);
+
+Route::delete('auth/access-tokens/{token?}', [AuthController::class, 'logout'])->middleware('auth:sanctum');
