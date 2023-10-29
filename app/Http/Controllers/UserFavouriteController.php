@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserFavourite;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\userFavourite as ResourcesUserFavourite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,10 +19,7 @@ class UserFavouriteController extends Controller
     {
         $user_favourites = UserFavourite::where('user_id', $user_id)->get()->all();
 
-        return response()->json([
-            "data" => $user_favourites,
-            'status' => 'success',
-        ], 200);
+        return ResourcesUserFavourite::collection($user_favourites);
     }
 
     /**

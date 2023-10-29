@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Addition;
 use App\Models\Order;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Item extends Model
 {
@@ -21,7 +22,7 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function additions()
+    public function itemAdditions(): HasMany
     {
         return $this->hasMany(ItemAddition::class);
     }
