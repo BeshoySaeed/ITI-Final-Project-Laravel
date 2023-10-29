@@ -15,10 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('balance')->nullable();
+            $table->integer('balance')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('street')->nullable();
+            $table->string('area')->nullable();
+            $table->string('city')->nullable();
+            $table->string('building_name')->nullable();
+            $table->integer('floor_number')->nullable();
+            $table->integer('flat_number')->nullable();
+            $table->string('gps_location')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

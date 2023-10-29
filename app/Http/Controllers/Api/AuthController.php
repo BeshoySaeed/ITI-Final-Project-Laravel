@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\UserPhone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -137,5 +138,14 @@ class AuthController extends Controller
             'status' => 'failed',
             'message' => 'User is not logged in'
         ], 400);
+    }
+
+    public function profile(Request $request)
+    {
+        $user = $request->user();
+        return response()->json([
+            'data' => new UserResource($user),
+            'status' => 'success',
+        ], 200);
     }
 }

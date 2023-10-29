@@ -16,6 +16,8 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $userPhones = UserphoneResource::collection($this->phones);
+
         return [
             "id"=>$this->id,
             "first_name"=>$this->first_name,
@@ -24,6 +26,15 @@ class UserResource extends JsonResource
             'email'=>$this->email,
             'password'=>$this->password,
             'balance'=>$this->balance,
+            'street'=>$this->street,
+            'area'=>$this->area,
+            'city'=>$this->city,
+            'building_name'=>$this->building_name,
+            'floor_number'=>$this->floor_number,
+            'flat_number'=>$this->flat_number,
+            'gps_location'=>$this->gps_location,
+            "phone1" => $userPhones[0]->phone,
+            "phone2" => $userPhones[1]->phone,
         ];
     }
 }
