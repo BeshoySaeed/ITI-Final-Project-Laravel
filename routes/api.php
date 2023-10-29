@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\JopApplicantController;
 use App\Http\Controllers\Api\PartnerController;
+use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\ChangePasswordController;
+
 use App\Http\Controllers\CustomerServiceEmailController;
 use App\Http\Controllers\CustomerServicePhoneController;
 use App\Http\Controllers\EmployeeController;
@@ -90,3 +93,7 @@ Route::apiResource('roles', RoleController::class)->middleware("is_admin");
 Route::apiResource('users', UserController::class);
 Route::apiResource('userPhone', UserphoneController::class);
 Route::apiResource('userAddress', UserAddressController::class);
+Route::post('/forget-password',[ResetPasswordController::class ,'forgetPass']);
+Route::post('/change-password',[ChangePasswordController::class ,'changepass']);
+
+
