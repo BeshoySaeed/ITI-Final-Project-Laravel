@@ -23,7 +23,7 @@ class OrderResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "completed" => $this->completed,
+            "status" => $this->status,
             "note" => $this->note,
             "payment_method" => $this->payment_method,
             "discount_code" => $this->discount_code,
@@ -35,10 +35,9 @@ class OrderResource extends JsonResource
             "floor_number" => $this->floor_number,
             "flat_number" => $this->flat_number,
             "GPS_location" => $this->GPS_location,
-             "created_at" => $this->created_at,
-             "user" => $user,
-              "items" => $items,
+            "created_at" => $this->created_at,
+            "user" => $user,
+            "items" => $items,
         ];
-
-}
+    }
 }
