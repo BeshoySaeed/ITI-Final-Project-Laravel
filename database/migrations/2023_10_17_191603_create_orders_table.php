@@ -13,18 +13,20 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->boolean('completed');
+            $table->enum('status', ['cart','processing','on-deliver', 'done'])->default("cart");
             $table->string('note')->nullable();
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('discount_code')->nullable();
-            $table->string('confirm_instructions');
-            $table->string("street");
-            $table->string("area");
-            $table->string("city");
-            $table->string("building_name");
-            $table->string("floor_number");
-            $table->string("flat_number");
-            $table->string("GPS_location");
+            $table->string('confirm_instructions')->nullable();
+            $table->string("street")->nullable();
+            $table->string("area")->nullable();
+            $table->string("city")->nullable();
+            $table->string("building_name")->nullable();
+            $table->string("floor_number")->nullable();
+            $table->string("flat_number")->nullable();
+            $table->string("GPS_location")->nullable();
+            $table->string("phone1")->nullable();
+            $table->string("phone2")->nullable();
             $table->timestamps();
         });
     }
