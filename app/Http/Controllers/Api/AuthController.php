@@ -22,7 +22,7 @@ class AuthController extends Controller
             "first_name" => "required|min:2|max:15",
             "last_name" => "required|min:2|max:15",
             "phone1" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
-            "phone2" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"]
+            "phone2" => ["regex:/^(\+20-1)[0-9]{9}$/"]
         ]);
 
         if ($validator->fails()) {
