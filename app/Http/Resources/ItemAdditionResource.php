@@ -14,6 +14,10 @@ class ItemAdditionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // $addition = $this->additions;
         return parent::toArray($request);
+
+
+
     }
 }

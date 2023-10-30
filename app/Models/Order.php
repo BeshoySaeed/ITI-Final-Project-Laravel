@@ -7,21 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 use App\Models\orderItems;
-
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = 
+    protected $fillable =
     ['user_id',
      'completed',
      'note',
     'payment_method',
     'discount_code',
     'confirm_instructions',
-    // 'phone_id',
-    // 'address_id',
 ];
 
     protected function user () : BelongsTo
@@ -30,8 +27,8 @@ class Order extends Model
     }
 
 
-    public function items()
+    public function orderItems(): HasMany
     {
-        return $this->belongsToMany(Item::class);
+        return $this->hasMany(OrderItem::class);
     }
 }

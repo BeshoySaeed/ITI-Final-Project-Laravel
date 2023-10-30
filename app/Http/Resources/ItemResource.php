@@ -14,6 +14,23 @@ class ItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        // $itemAdditions = new AdditionResource($this->additions);
+        $itemAdditions = AdditionResource::collection($this->itemAdditions->map(function ($itemAddition) {
+            return $itemAddition->addition;
+        }));
+
+
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "img" => $this->img,
+            "price" => $this->price,
+            "description" => $this->description,
+            "discount" => $this->discount,
+            "active"  => $this->active,
+            "category_id" => $this->category_id,
+            "itemAdditions" => $itemAdditions
+        ];
     }
 }
