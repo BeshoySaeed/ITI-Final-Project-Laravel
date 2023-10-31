@@ -37,7 +37,7 @@ class OrderController extends Controller
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
-            "items" => ["required"],
+            "item" => ["required"],
         ]);
 
         if ($validator->fails()) {
@@ -46,16 +46,15 @@ class OrderController extends Controller
 
         $newOrder = [
             "user_id" => $user->id,
-            "items" => $request->all()
+            "item" => $request->item
         ];
 
         // Get order row if exit for the same user
         $order = Order::where("user_id", $user->id)
             ->where("status", "cart")->first();
-
         if ($order) {
             // if exist
-            $this->storeItems($request->items, $order->id);
+            $this->storeItem($request->item, $order->id);
             return response()->json([
                 "data" => new OrderResource($order),
                 'status' => 'success',
@@ -64,7 +63,7 @@ class OrderController extends Controller
         } else {
             // if not exist --> it will create a new order with status cart
             $order = Order::create($newOrder);
-            $this->storeItems($request->items, $order->id);
+            $this->storeItem($request->item, $order->id);
             return response()->json([
                 "data" => new OrderResource($order),
                 'status' => 'success',
@@ -73,25 +72,26 @@ class OrderController extends Controller
         }
     }
 
-    public function storeItems($items, $order_id)
+    public function storeItem($item, $order_id)
     {
-        foreach ($items as $item) {
-            $orderItem = OrderItem::where("order_id", $order_id)->where("item_id", $item['item_id'])->first();
-            
-            if ($orderItem) {
+        $orderItems = OrderItem::where("order_id", $order_id)->where("item_id", $item['item_id'])->get();
+        if (count($orderItems) > 0) {
+            foreach ($orderItems as $orderItem) {
                 $orderItemAdditions = OrderItemAddition::where("order_item_id", $orderItem->id)->orderBy("addition_id")->get('addition_id')->toArray();
-                $sortedAdditions =$this->sortArray($item['additions']);
+                $sortedAdditions = $this->sortArray($item['additions']);
                 $isEqual = $this->checkOrderItemAdditionEquality($orderItemAdditions, $sortedAdditions);
                 if ($isEqual) {
                     // if the order item additions is stored before
                     $orderItem->quantity = ++$orderItem->quantity;
                     $orderItem->save();
-                } else {
-                    $this->storeNewOrderItem($order_id, $item);
+                    exit;
                 }
-            } else {
+            }
+            if ($isEqual == false) {
                 $this->storeNewOrderItem($order_id, $item);
             }
+        } else {
+            $this->storeNewOrderItem($order_id, $item);
         }
     }
 
