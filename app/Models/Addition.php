@@ -18,4 +18,9 @@ class Addition extends Model
    {
        return $this->belongsToMany(Item::class);
    }
+
+   public function orderItem(): BelongsToMany
+   {
+       return $this->belongsToMany(OrderItem::class);
+   }
 }

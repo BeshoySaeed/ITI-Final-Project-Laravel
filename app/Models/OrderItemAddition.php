@@ -9,4 +9,9 @@ class OrderItemAddition extends Model
 {
     use HasFactory;
     protected $fillable = ["order_item_id", "addition_id"];
+
+    public function addition()
+    {
+        return $this->belongsTo(Addition::class);
+    }
 }

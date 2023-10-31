@@ -32,6 +32,11 @@ class OrderItem extends Model
 
     public function additions()
     {
-        return $this->belongsToMany(Addition::class);
+        return $this->hasMany(Addition::class);
+    }
+
+    public function orderItemAddition()
+    {
+        return $this->hasMany(OrderItemAddition::class);
     }
 }

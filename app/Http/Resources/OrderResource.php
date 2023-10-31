@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\UserPhone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,12 +14,6 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
-        $user = new UserResource($this->user);
-        $items = ItemResource::collection($this->orderItems->map(function ($orderItem) {
-            return $orderItem->item;
-        }));
-
         return [
             "id" => $this->id,
             "status" => $this->status,
@@ -36,8 +29,8 @@ class OrderResource extends JsonResource
             "flat_number" => $this->flat_number,
             "GPS_location" => $this->GPS_location,
             "created_at" => $this->created_at,
-            "user" => $user,
-            "items" => $items,
+            "user" => new UserResource($this->user),
+            "items" => OrderItemResource::collection($this->orderItems),
         ];
     }
 }

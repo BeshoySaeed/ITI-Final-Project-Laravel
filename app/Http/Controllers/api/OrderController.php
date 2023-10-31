@@ -72,6 +72,19 @@ class OrderController extends Controller
         }
     }
 
+    public function cart(Request $request)
+    {
+        $user = $request->user();
+        $order = Order::where("user_id", $user->id)
+        ->where("status", "cart")->first();
+        
+        // dd($order);
+        return response()->json([
+            "data" => new OrderResource($order),
+            'status' => 'success',
+        ], 200);
+    }
+
     public function storeItem($item, $order_id)
     {
         $orderItems = OrderItem::where("order_id", $order_id)->where("item_id", $item['item_id'])->get();
