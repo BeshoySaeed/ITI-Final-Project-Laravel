@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('role_id')->default(1)->constrained('roles')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
-            $table->foreignId('subscribe_id')->default(NULL)->constrained('subscription_plans')
+            $table->foreignId('subscribe_id')->nullable()->constrained('subscription_plans')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
         });
