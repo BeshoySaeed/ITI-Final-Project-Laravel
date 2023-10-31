@@ -31,6 +31,7 @@ class UserResource extends JsonResource
             'floor_number'=>$this->floor_number,
             'flat_number'=>$this->flat_number,
             'gps_location'=>$this->gps_location,
+            'subscribe_id'=>this->subscribe_id,
             'phones' => UserphoneResource::collection($this->phones)
         ];
     }
