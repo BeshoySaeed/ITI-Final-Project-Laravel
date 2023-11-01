@@ -85,6 +85,29 @@ class OrderController extends Controller
         ], 200);
     }
 
+    public function updateCart(Request $request)
+    {
+        $orderItem = OrderItem::where("id", $request->order_item_id)->first();
+
+        if($request->quantity > 0) {
+            // If the request is needing update the item quantity number in the cart
+            $orderItem->quantity = $request->quantity;
+            $orderItem->update();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "The order item quantity is updated successfully"
+            ], 200);
+        } else {
+            // If the request is needing remove the item from the cart
+            $orderItem->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => "The order item is deleted successfully"
+            ], 200);
+        }
+    }
+
     public function storeItem($item, $order_id)
     {
         $orderItems = OrderItem::where("order_id", $order_id)->where("item_id", $item['item_id'])->get();
