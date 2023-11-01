@@ -86,6 +86,7 @@ Route::resource('item',ItemController::class);
 Route::resource('order',OrderController::class);
 Route::get('cart', [OrderController::class, 'cart']);
 Route::put('update-cart', [OrderController::class, 'updateCart']);
+Route::delete('update-cart', [OrderController::class, 'deleteAdditionCart']);
 Route::resource('orderItem',OrderItemController::class)->middleware("auth:sanctum");
 Route::resource('itemAddition',ItemAdditionController::class);
 Route::resource('discountCode',DiscountCodeController::class)->middleware("is_admin");

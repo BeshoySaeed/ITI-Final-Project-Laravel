@@ -108,6 +108,16 @@ class OrderController extends Controller
         }
     }
 
+    public function deleteAdditionCart(Request $request)
+    {
+        $orderItemAddition = OrderItemAddition::where("id", $request->order_item_addition_id)->first();
+        $orderItemAddition->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => "The order item addition is deleted successfully"
+        ], 200);
+    }
+
     public function storeItem($item, $order_id)
     {
         $orderItems = OrderItem::where("order_id", $order_id)->where("item_id", $item['item_id'])->get();
