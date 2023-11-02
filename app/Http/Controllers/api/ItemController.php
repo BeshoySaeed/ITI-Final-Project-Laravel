@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
+use App\Models\ItemAddition;
 use Illuminate\Support\Facades\Validator;
 class ItemController extends Controller
 {
@@ -32,19 +33,30 @@ class ItemController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "name"=>"required",
-            "img"=>"required",
+            "image"=>"required",
             "price"=>"required",
             "description"=>"required",
-            "discount"=>"required",
             "category_id"=>"required",
-            "active"=>"",
         ]);
 
         if($validator->fails()){
             return response($validator->errors()->all(), 422);
         }
+
         $item = Item::create($request->all());
+        $this->storeItemAdditions($request->additions, $item->id);
+
         return new ItemResource ($item);
+    }
+
+    public function storeItemAdditions($additions, $item_id)
+    {
+        foreach ($additions as $addition) {
+            ItemAddition::create([
+                'item_id' => $item_id,
+                'addition_id' => $addition['id'],
+            ]);
+        }
     }
 
     /**
@@ -61,6 +73,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        // dd($request->all());
         $item->update($request->all());
         return new ItemResource ($item);
     }
