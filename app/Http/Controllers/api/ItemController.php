@@ -23,7 +23,6 @@ class ItemController extends Controller
     {
         $item = Item::all();
         return ItemResource::collection($item);
-
     }
 
     /**
@@ -32,21 +31,21 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name"=>"required",
-            "image"=>"required",
-            "price"=>"required",
-            "description"=>"required",
-            "category_id"=>"required",
+            "name" => "required",
+            "image" => "required",
+            "price" => "required",
+            "description" => "required",
+            "category_id" => "required",
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response($validator->errors()->all(), 422);
         }
 
         $item = Item::create($request->all());
         $this->storeItemAdditions($request->additions, $item->id);
 
-        return new ItemResource ($item);
+        return new ItemResource($item);
     }
 
     public function storeItemAdditions($additions, $item_id)
@@ -64,8 +63,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return new ItemResource($item) ;
-
+        return new ItemResource($item);
     }
 
     /**
@@ -73,9 +71,23 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            "name" => "required",
+            "price" => "required",
+            "description" => "required",
+            "category_id" => "required",
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors()->all(), 422);
+        }
+
         $item->update($request->all());
-        return new ItemResource ($item);
+
+        ItemAddition::where('item_id', $item->id)->delete();
+        $this->storeItemAdditions($request->additions, $item->id);
+
+        return new ItemResource($item);
     }
 
     /**
