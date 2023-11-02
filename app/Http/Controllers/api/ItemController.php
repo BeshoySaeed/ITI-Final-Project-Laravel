@@ -4,9 +4,11 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
 use App\Models\ItemAddition;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Validator;
 class ItemController extends Controller
 {
@@ -95,6 +97,9 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+        $orders = Order::where('status', 'cart')->pluck('id');
+        OrderItem::whereIn('order_id', $orders)->where('item_id', $item->id)->delete();
+
         $item->delete();
         return response("Deleted", 204);
     }
