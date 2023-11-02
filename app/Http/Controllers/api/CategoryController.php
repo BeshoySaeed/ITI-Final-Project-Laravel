@@ -50,8 +50,20 @@ class CategoryController extends Controller
         if($validator->fails()){
             return response($validator->errors()->all(), 422);
         }
-   
-        $category = Category::create($request->all());
+
+        $path = public_path('images/category');
+        !is_dir($path) &&
+            mkdir($path, 0777, true);
+
+
+        $imageName = time() . '.' . $request->file('img')->extension();
+        $request->file('img')->move($path, $imageName);
+
+        $fullRequest = $request->all();
+        $fullRequest['img'] = $imageName;
+        
+
+        $category = Category::create($fullRequest);
         $category->save();
 
         return (new CategoryResource($category))->response()->setStatusCode(201);  
