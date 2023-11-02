@@ -11,11 +11,13 @@ use App\Models\Addition;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'img', 'price','description','discount','active','category_id'];
+    use SoftDeletes;
+    protected $fillable = ['name', 'image', 'price','description','discount','active','category_id'];
 
     protected function category() : BelongsTo
     {

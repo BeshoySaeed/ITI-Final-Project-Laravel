@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('discount')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
+            $table->softDeletesTz();
         });
     }
 
