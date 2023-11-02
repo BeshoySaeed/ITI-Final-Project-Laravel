@@ -19,6 +19,7 @@ class Order extends Model
     'payment_method',
     'discount_code',
     'confirm_instructions',
+    'status'
 ];
 
     protected function user () : BelongsTo

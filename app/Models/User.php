@@ -32,7 +32,14 @@ class User extends Authenticatable
         'role_id',
         'email',
         'password',
-        'balance'
+        'balance',
+        'city',
+        'street',
+        'area',
+        'building_name',
+        'floor_number',
+        'flat_number',
+        'gps_location'
     ];
 
     /**

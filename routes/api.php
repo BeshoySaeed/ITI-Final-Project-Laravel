@@ -84,6 +84,7 @@ Route::apiResource('employees', EmployeeController::class)->middleware("is_admin
 Route::resource('addition',AdditionController::class)->middleware("is_admin");
 Route::resource('item',ItemController::class);
 Route::resource('order',OrderController::class);
+Route::get('orders/{id}', [OrderController::class, 'userOrders'] );
 Route::get('cart', [OrderController::class, 'cart']);
 Route::put('update-cart', [OrderController::class, 'updateCart']);
 Route::delete('update-cart/{id}', [OrderController::class, 'deleteItemAdditionCart']);

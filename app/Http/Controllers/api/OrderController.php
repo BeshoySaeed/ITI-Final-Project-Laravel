@@ -9,6 +9,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\OrderItem;
 use App\Models\OrderItemAddition;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -29,6 +30,11 @@ class OrderController extends Controller
         return OrderResource::collection($order);
     }
 
+    public function userOrders($id)
+    {
+        $orders = Order::where('user_id', $id)->get();
+        return OrderResource::collection($orders);
+    }
     /**
      * Store a newly created resource in storage.
      */
