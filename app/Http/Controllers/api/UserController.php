@@ -101,7 +101,7 @@ class UserController extends Controller
 
         
         $user->subscribe_id = $request->subscribe_id;
-
+        $user->save();
         return new UserResource($user);
     }
 }
