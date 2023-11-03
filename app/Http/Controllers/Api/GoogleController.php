@@ -34,8 +34,8 @@ class GoogleController extends Controller
                 $token = $findUser->createToken('API TOKEN')->plainTextToken;
                 $response=response()->json([
                     "token" => $token,
-                    "user_id" => $user->id,
-                    "role_id" => $user->role_id,
+                    "user_id" => $findUser->id,
+                    "role_id" => $findUser->role_id,
                     'status' => 'success',
                     'message' => 'User Login successfully'
                 ], 201);
@@ -55,13 +55,13 @@ class GoogleController extends Controller
                 $token = $googleUser->createToken('API TOKEN')->plainTextToken;
                 $response=response()->json([
                     "token" => $token,
-                    "user_id" => $user->id,
-                    "role_id" => $user->role_id,
+                    "user_id" => $googleUser->id,
+                    "role_id" => $googleUser->role_id,
                     'status' => 'success',
                     'message' => 'User Login successfully'
                 ], 201);
-                Session::put('response', $response);
-                return Redirect::away('http://localhost:4200/home');
+                $redirectUrl = 'http://localhost:4200/home?'.http_build_query($response);
+                return Redirect::away($redirectUrl);
             }
         } catch (Exception $e) {
             dd($e->getMessage());
