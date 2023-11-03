@@ -32,6 +32,8 @@ class UserResource extends JsonResource
             'flat_number'=>$this->flat_number,
             'gps_location'=>$this->gps_location,
             'subscribe_id'=>$this->subscribe_id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
             'phones' => UserphoneResource::collection($this->phones)
         ];
     }

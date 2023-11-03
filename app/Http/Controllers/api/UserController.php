@@ -101,6 +101,8 @@ class UserController extends Controller
 
         
         $user->subscribe_id = $request->subscribe_id;
+        $user->start_date = $request->start_date;
+        $user->end_date = $request->end_date;
         $user->save();
         return new UserResource($user);
     }

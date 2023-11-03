@@ -76,7 +76,7 @@ Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index'
 Route::apiResource('user-favourites', UserFavouriteController::class)->middleware("auth:sanctum");
 Route::apiResource('feedbacks', FeedBackController::class);
 
-Route::apiResource('subscription-plans', SubscriptionPlanController::class)->middleware('is_admin'); //add is admin-middleware
+Route::apiResource('subscription-plans', SubscriptionPlanController::class); //add is admin-middleware
 Route::get('subscription-plans-active', [SubscriptionPlanController::class, 'activeSubscriptions']);
 
 Route::apiResource('employees', EmployeeController::class)->middleware("is_admin");
