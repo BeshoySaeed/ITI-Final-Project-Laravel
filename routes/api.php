@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Session;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
@@ -7,6 +8,9 @@ use App\Http\Controllers\Api\JopApplicantController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\ChangePasswordController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\StripeController;
+use App\Http\Controllers\Api\GoogleController;
 
 use App\Http\Controllers\CustomerServiceEmailController;
 use App\Http\Controllers\CustomerServicePhoneController;
@@ -101,3 +105,19 @@ Route::post('/forget-password',[ResetPasswordController::class ,'forgetPass']);
 Route::post('/change-password',[ChangePasswordController::class ,'changepass']);
 
 
+Route::post('paypal/payment', [PaymentController::class, 'payment'])->name('paypal');
+Route::get('paypal/success', [PaymentController::class, 'success'])->name('paypal_success');
+Route::get('paypal/cancel', [PaymentController::class, 'cancel'])->name('paypal_cancel');
+
+Route::post('stripe/payment', [StripeController::class, 'payment'])->name('stripe');
+Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe_success');
+Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe_cancel');
+
+Route::get('auth/google', [GoogleController::class, 'googlepage'])->middleware('web');
+Route::get('auth/google/callback', [GoogleController::class, 'Callback'])->middleware('web');
+
+Route::get('/response-data', function () {
+    $response = Session::get('response');
+    Session::forget('response');
+    return response()->json($response);
+});

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('floor_number')->nullable();
             $table->integer('flat_number')->nullable();
             $table->string('gps_location')->nullable();
+            $table->string('google_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
