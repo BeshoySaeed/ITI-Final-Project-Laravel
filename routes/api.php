@@ -76,7 +76,7 @@ Route::get('user-favourites/{user_id}', [UserFavouriteController::class, 'index'
 Route::apiResource('user-favourites', UserFavouriteController::class)->middleware("auth:sanctum");
 Route::apiResource('feedbacks', FeedBackController::class);
 
-Route::apiResource('subscription-plans', SubscriptionPlanController::class)->middleware("is_admin");
+Route::apiResource('subscription-plans', SubscriptionPlanController::class); //add is admin-middleware
 Route::get('subscription-plans-active', [SubscriptionPlanController::class, 'activeSubscriptions']);
 
 Route::apiResource('employees', EmployeeController::class)->middleware("is_admin");
@@ -96,5 +96,6 @@ Route::apiResource('userPhone', UserphoneController::class);
 Route::apiResource('userAddress', UserAddressController::class);
 Route::post('/forget-password',[ResetPasswordController::class ,'forgetPass']);
 Route::post('/change-password',[ChangePasswordController::class ,'changepass']);
+Route::put('users/{user}/subID', [UserController::class, 'setSubId']);
 
 

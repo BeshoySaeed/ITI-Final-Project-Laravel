@@ -94,4 +94,14 @@ class UserController extends Controller
         $user->delete();
         return response("Deleted", 204);
     }
+
+    public function setSubId(Request $request, User $user)
+    {
+        //
+
+        
+        $user->subscribe_id = $request->subscribe_id;
+
+        return new UserResource($user);
+    }
 }
