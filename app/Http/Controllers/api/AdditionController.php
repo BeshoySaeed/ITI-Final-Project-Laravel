@@ -34,11 +34,31 @@ class AdditionController extends Controller
             "description"=>"required",
         ]);
 
+
         if($validator->fails()){
             return response($validator->errors()->all(), 422);
         }
-        $addition = Addition::create($request->all());
-        return new AdditionResource ($addition);
+
+        // dd($request);
+        $path = public_path('images/addition');
+        !is_dir($path) &&
+            mkdir($path, 7777, true);
+
+
+        $imageName = time() . '.' . $request->file('img')->extension();
+        $request->file('img')->move($path, $imageName);
+
+        $fullRequest = $request->all();
+        $fullRequest['img'] = $imageName;
+        
+
+        $category = Addition::create($fullRequest);
+        $category->save();
+        
+   
+        return ($category);
+
+
     }
 
     /**
@@ -65,8 +85,13 @@ class AdditionController extends Controller
      */
     public function destroy(Addition $addition)
     {
-        $addition->delete();
-        return response("Deleted", 204);
+        $image_path=public_path('images/addition/'. $addition->img);
+        if(file_exists($image_path)){
+            unlink($image_path);
+            $addition->delete();        
 
     }
+    return response("Deleted", 204);
+
+}
 }

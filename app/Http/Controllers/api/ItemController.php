@@ -37,14 +37,31 @@ class ItemController extends Controller
             "description"=>"required",
             "discount"=>"required",
             "category_id"=>"required",
-            "active"=>"",
+            "active"=>"required",
         ]);
 
         if($validator->fails()){
             return response($validator->errors()->all(), 422);
         }
-        $item = Item::create($request->all());
-        return new ItemResource ($item);
+
+        $path = public_path('images/item');
+        !is_dir($path) &&
+            mkdir($path, 7777, true);
+
+
+        $imageName = time() . '.' . $request->file('img')->extension();
+        $request->file('img')->move($path, $imageName);
+
+        $fullRequest = $request->all();
+        $fullRequest['img'] = $imageName;
+        
+
+        $item = Item::create($fullRequest);
+        $item->save();
+
+        return ($item);
+
+       
     }
 
     /**
@@ -70,7 +87,19 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        $item->delete();
+
+        //  $product = Product::findorfail($id);
+        // $product->delete();
+$image_path=public_path('images/item/'. $item->img);
+if(file_exists($image_path)){
+    unlink($image_path);
+    $item->delete();
+
+}
+
+// dd($image_path);
+        // unlink('images/item/'. $item->img);
+
         return response("Deleted", 204);
     }
 }

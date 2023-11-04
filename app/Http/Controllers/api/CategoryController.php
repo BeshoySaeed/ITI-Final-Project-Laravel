@@ -39,6 +39,19 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
+         // $addition=new Addition();
+
+        // if($request->hasFile('image')){
+        //     $completeFileNmae=$request->file('image')->getClientOriginalName();
+        //     $fileNameOnly=pathinfo($completeFileNmae,PATHINFO_FILENAME);
+        //     $extension=$request->file('image')->getClientOriginalExtension();
+        //     $compic=str_replace(' ','_',$fileNameOnly.'-'.rand().'_'.time().'.'.$extension);
+        //     $path=$request->file('image')-storeAs('public/images/category',$compic);
+        //     $addition->img=$compic;
+        // }
+
     public function store(Request $request)
     {
         //
@@ -50,8 +63,19 @@ class CategoryController extends Controller
         if($validator->fails()){
             return response($validator->errors()->all(), 422);
         }
-   
-        $category = Category::create($request->all());
+// dd($request);
+        $path = public_path('images/category');
+        !is_dir($path) &&
+            mkdir($path, 0777, true);
+
+
+        $imageName = time() . '.' . $request->file('img')->extension();
+        $request->file('img')->move($path, $imageName);
+
+        $fullRequest = $request->all();
+        $fullRequest['img'] = $imageName;
+        
+        $category = Category::create($fullRequest);
         $category->save();
 
         return (new CategoryResource($category))->response()->setStatusCode(201);  
@@ -94,7 +118,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
-        $category->delete();
-        return response("Deleted", 204);
+        $image_path=public_path('images/category/'. $category->img);
+        if(file_exists($image_path)){
+            unlink($image_path);
+            $category->delete();        
+
+    }
+            return response("Deleted", 204);
     }
 }
