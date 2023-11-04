@@ -15,9 +15,7 @@ return new class extends Migration
             $table->foreignId('role_id')->default(1)->constrained('roles')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();
-            $table->foreignId('subscribe_id')->nullable()->constrained('subscription_plans')
-            ->cascadeOnDelete()
-            ->cascadeOnUpdate();
+       
         });
     }
 
@@ -30,9 +28,7 @@ return new class extends Migration
             $table->dropColumn('role_id');
             $table->dropForeign('users_role_id_foreign');
             $table->dropIndex('users_role_id_index');
-            $table->dropColumn('subscribe_id');
-            $table->dropForeign('users_subscribe_id_foreign');
-            $table->dropIndex('users_subscribe_id_index');
+      
         });
     }
 };

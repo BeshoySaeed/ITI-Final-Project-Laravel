@@ -93,8 +93,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(FeedBack::class);
     }
-    protected function subscribe(): BelongsTo
-    {
-        return $this->belongsTo(SubscriptionPlan::class);
-    }
+
 }

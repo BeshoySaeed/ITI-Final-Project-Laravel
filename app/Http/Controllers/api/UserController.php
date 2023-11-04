@@ -97,6 +97,8 @@ class UserController extends Controller
 
     public function setSubId(Request $request, User $user)
     {
+        //
+
         
         $user->subscribe_id = $request->subscribe_id;
         $user->start_date = $request->start_date;
