@@ -4,8 +4,11 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
+use App\Models\ItemAddition;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Validator;
 class ItemController extends Controller
 {
@@ -22,7 +25,6 @@ class ItemController extends Controller
     {
         $item = Item::all();
         return ItemResource::collection($item);
-
     }
 
     /**
@@ -31,20 +33,31 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name"=>"required",
-            "img"=>"required",
-            "price"=>"required",
-            "description"=>"required",
-            "discount"=>"required",
-            "category_id"=>"required",
-            "active"=>"",
+            "name" => "required",
+            "image" => "required",
+            "price" => "required",
+            "description" => "required",
+            "category_id" => "required",
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response($validator->errors()->all(), 422);
         }
+
         $item = Item::create($request->all());
-        return new ItemResource ($item);
+        $this->storeItemAdditions($request->additions, $item->id);
+
+        return new ItemResource($item);
+    }
+
+    public function storeItemAdditions($additions, $item_id)
+    {
+        foreach ($additions as $addition) {
+            ItemAddition::create([
+                'item_id' => $item_id,
+                'addition_id' => $addition['id'],
+            ]);
+        }
     }
 
     /**
@@ -52,8 +65,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return new ItemResource($item) ;
-
+        return new ItemResource($item);
     }
 
     /**
@@ -61,8 +73,23 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        $validator = Validator::make($request->all(), [
+            "name" => "required",
+            "price" => "required",
+            "description" => "required",
+            "category_id" => "required",
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors()->all(), 422);
+        }
+
         $item->update($request->all());
-        return new ItemResource ($item);
+
+        ItemAddition::where('item_id', $item->id)->delete();
+        $this->storeItemAdditions($request->additions, $item->id);
+
+        return new ItemResource($item);
     }
 
     /**
@@ -70,6 +97,9 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+        $orders = Order::where('status', 'cart')->pluck('id');
+        OrderItem::whereIn('order_id', $orders)->where('item_id', $item->id)->delete();
+
         $item->delete();
         return response("Deleted", 204);
     }
