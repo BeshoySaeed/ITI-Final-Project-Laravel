@@ -17,8 +17,8 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware("auth:sanctum");
-        $this->middleware("is_admin")->only('index', 'store', 'destroy');
+        //$this->middleware("auth:sanctum");
+       // $this->middleware("is_admin")->only('index', 'store', 'destroy');
     }
 
     public function index()
