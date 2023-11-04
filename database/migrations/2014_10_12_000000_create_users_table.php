@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('floor_number')->nullable();
             $table->integer('flat_number')->nullable();
             $table->string('gps_location')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

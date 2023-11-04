@@ -100,5 +100,5 @@ Route::apiResource('userPhone', UserphoneController::class);
 Route::apiResource('userAddress', UserAddressController::class);
 Route::post('/forget-password',[ResetPasswordController::class ,'forgetPass']);
 Route::post('/change-password',[ChangePasswordController::class ,'changepass']);
-
+Route::put('users/{user}/subID', [UserController::class, 'setSubId']);
 

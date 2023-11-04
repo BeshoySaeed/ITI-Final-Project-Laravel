@@ -96,6 +96,7 @@ class AuthController extends Controller
             "token" => $token,
             "user_id" => $user->id,
             "role_id" => $user->role_id,
+            'subscribe_id' => $user->subscribe_id,
             'status' => 'success',
             'message' => 'User registered successfully'
         ], 201);

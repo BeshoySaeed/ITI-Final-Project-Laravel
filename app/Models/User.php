@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\UserPhone;
 use App\Models\Item;
 use App\Models\FeedBack;
+use App\Models\SubscriptionPlan;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
@@ -91,5 +92,9 @@ class User extends Authenticatable
     protected function feedBacks() : HasMany
     {
         return $this->hasMany(FeedBack::class);
+    }
+    protected function subscribe(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPlan::class);
     }
 }

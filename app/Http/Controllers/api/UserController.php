@@ -70,9 +70,9 @@ class UserController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            "email"=>"sometimes|required",
-            "first_name"=>"sometimes|required",
-            "last_name"=>"sometimes|required",
+            "email"=>"required",
+            "first_name"=>"required",
+            "last_name"=>"required",
         ]);
    
         
@@ -93,5 +93,15 @@ class UserController extends Controller
         //
         $user->delete();
         return response("Deleted", 204);
+    }
+
+    public function setSubId(Request $request, User $user)
+    {
+        
+        $user->subscribe_id = $request->subscribe_id;
+        $user->start_date = $request->start_date;
+        $user->end_date = $request->end_date;
+        $user->save();
+        return new UserResource($user);
     }
 }
