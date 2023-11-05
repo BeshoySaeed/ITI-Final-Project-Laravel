@@ -88,8 +88,7 @@ class ItemController extends Controller
         $item->update($request->all());
 
         ItemAddition::where('item_id', $item->id)->delete();
-        $itemAdditionsArray = json_decode($request->additions, true);
-        $this->storeItemAdditions($itemAdditionsArray, $item->id);
+        $this->storeItemAdditions($request->additions, $item->id);
 
         return new ItemResource($item);
     }
