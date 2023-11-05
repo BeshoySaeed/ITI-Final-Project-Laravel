@@ -37,12 +37,22 @@ class StripeController extends Controller
 
     public function success()
     {
-        return redirect()->away('http://localhost:4200');
+        $response=response()->json([
+            'status' => 'success',
+            'message' => 'Payment Success'
+        ], 201);
+        $redirectUrl = 'http://localhost:4200/cart?'.http_build_query($response);
+        return redirect()->away($redirectUrl);
     }
 
     public function cancel()
     {
-        return "Payment is cancelled!";
+        $response=response()->json([
+            'status' => 'failed',
+            'message' => 'Payment Failed'
+        ], 201);
+        $redirectUrl = 'http://localhost:4200/home?'.http_build_query($response);
+        return Redirect::away($redirectUrl);
     }
 }
 
