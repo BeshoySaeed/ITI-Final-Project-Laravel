@@ -21,8 +21,7 @@ class AuthController extends Controller
             "password" => ["required", "min:2", "max:50", "confirmed", "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/"],
             "first_name" => "required|min:2|max:15",
             "last_name" => "required|min:2|max:15",
-            "phone1" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"],
-            "phone2" => ["regex:/^(\+20-1)[0-9]{9}$/"]
+            "phone1" => ["required", "regex:/^(\+20-1)[0-9]{9}$/"]
         ]);
 
         if ($validator->fails()) {
@@ -43,7 +42,10 @@ class AuthController extends Controller
         $user->save();
 
         $this->storeUserPhone($request->phone1, $user->id);
-        $this->storeUserPhone($request->phone2, $user->id);
+
+        if(isset($request->phone2)) {
+            $this->storeUserPhone($request->phone2, $user->id);
+        }
 
 
         $token = $user->createToken('API TOKEN')->plainTextToken;
