@@ -32,12 +32,12 @@ class StripeController extends Controller
             'cancel_url' => route('stripe_cancel'),
         ]);
 
-        return response()->json(['url' => $session->url]);
+        return response()->json(['success'=>true,'url' => $session->url]);
     }
 
     public function success()
     {
-        return "Payment is successful!";
+        return redirect()->away('http://localhost:4200');
     }
 
     public function cancel()

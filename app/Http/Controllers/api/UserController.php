@@ -70,9 +70,9 @@ class UserController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            "email"=>"required",
-            "first_name"=>"required",
-            "last_name"=>"required",
+            "email"=>"sometimes|required",
+            "first_name"=>"sometimes|required",
+            "last_name"=>"sometimes|required",
         ]);
    
         

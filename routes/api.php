@@ -108,6 +108,7 @@ Route::put('users/{user}/subID', [UserController::class, 'setSubId']);
 
 Route::post('paypal/payment', [PaymentController::class, 'payment'])->name('paypal');
 Route::get('paypal/success', [PaymentController::class, 'success'])->name('paypal_success');
+Route::get('paypal/submit', [PaymentController::class, 'pay'])->name('pay_success');
 Route::get('paypal/cancel', [PaymentController::class, 'cancel'])->name('paypal_cancel');
 
 Route::post('stripe/payment', [StripeController::class, 'payment'])->name('stripe');
