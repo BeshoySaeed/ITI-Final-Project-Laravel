@@ -30,6 +30,9 @@ class UserResource extends JsonResource
             'building_name'=>$this->building_name,
             'floor_number'=>$this->floor_number,
             'flat_number'=>$this->flat_number,
+            'subscribe_id'=>$this->subscribe_id,
+            'start_date'=>$this->start_date,
+            'end_date'=>$this->end_date,
             'gps_location'=>$this->gps_location,
             'phones' => UserphoneResource::collection($this->phones)
         ];

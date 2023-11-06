@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('street')->nullable();
             $table->string('area')->nullable();
             $table->string('city')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('building_name')->nullable();
             $table->integer('floor_number')->nullable();
             $table->integer('flat_number')->nullable();

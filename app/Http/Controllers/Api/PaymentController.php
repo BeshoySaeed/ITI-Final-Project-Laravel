@@ -86,5 +86,74 @@ class PaymentController extends Controller
         return redirect()->away($redirectUrl);
 
     }
+    
+    public function paymentsubs(Request $request)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "application_context" => [
+                "return_url" => route('paypal_successs'),
+                "cancel_url" => route('paypal_cancels')
+            ],
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => $request->value
+                    ]
+                ]
+            ]
+        ]);
+
+        //dd($response);
+
+        if(isset($response['id']) && $response['id']!=null) {
+            foreach($response['links'] as $link) {
+                if($link['rel'] === 'approve') {
+                    return response()->json(['success' => true,'link'=>$link['href']]);
+                }
+            }
+        } else {
+            return redirect()->route('paypal_cancels');
+        }
+    }
+    public function successsubs(Request $request)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+        $response = $provider->capturePaymentOrder($request->token);
+
+        //dd($response);
+
+        if(isset($response['status']) && $response['status'] == 'COMPLETED') {
+
+            $response=response()->json([
+                'status' => 'success',
+                'message' => 'Payment Success'
+            ], 201);
+            $redirectUrl = 'http://localhost:4200/home';
+            return redirect()->away($redirectUrl);
+
+
+        } else {
+            return redirect()->route('paypal_cancels');
+        }
+    }
+    public function cancelsubs()
+    {
+        $response=response()->json([
+            'status' => 'failed',
+            'message' => 'Payment Failed'
+        ], 201);
+        $redirectUrl = 'http://localhost:4200/home?'.http_build_query($response);
+        return redirect()->away($redirectUrl);
+
+    }
+
 
 }

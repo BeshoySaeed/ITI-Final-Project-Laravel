@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class SubscriptionPlanController extends Controller
 {
+
+    public function __construct()
+    {
+    }
     /**
+     * 
      * Display a listing of the resource.
      */
     public function index()

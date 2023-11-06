@@ -41,7 +41,11 @@ class User extends Authenticatable
         'building_name',
         'floor_number',
         'flat_number',
-        'gps_location'
+        'gps_location',
+        'subscribe_id',
+        'start_date',
+        'end_date'
+
     ];
 
     /**
@@ -94,5 +98,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(FeedBack::class);
     }
-
+    protected function subscribe(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPlan::class);
+    }
 }
