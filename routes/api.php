@@ -112,7 +112,7 @@ Route::get('paypal/cancel', [PaymentController::class, 'cancel'])->name('paypal_
 
 Route::post('paypal/paymentsubs', [PaymentController::class, 'paymentsubs'])->name('paypals');
 Route::get('paypal/successsubs', [PaymentController::class, 'successsubs'])->name('paypal_successs');
-Route::get('paypal/cancel', [PaymentController::class, 'cancel'])->name('paypal_cancels');
+Route::get('paypal/cancels', [PaymentController::class, 'cancel'])->name('paypal_cancels');
 
 Route::post('stripe/payment', [StripeController::class, 'payment'])->name('stripe');
 Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe_success');
