@@ -51,7 +51,7 @@
                                             following link and follow the instructions.
                                         </p>
                                     
-                                        <p>{{$data['body']}}</p>
+                                        <p>Please use this OTP to change your password</p>
                                         <p>{{$data['url']}}</p>
 
                                     
