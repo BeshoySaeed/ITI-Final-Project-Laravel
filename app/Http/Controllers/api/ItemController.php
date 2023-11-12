@@ -96,12 +96,13 @@ class ItemController extends Controller
 
         //  $product = Product::findorfail($id);
         // $product->delete();
-$image_path=public_path('images/item/'. $item->img);
+$image_path=public_path('images/item/'. $item->image);
 if(file_exists($image_path)){
     unlink($image_path);
     $item->delete();
-
 }
+$item->delete();
+
 
 // dd($image_path);
         // unlink('images/item/'. $item->img);
