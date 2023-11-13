@@ -41,7 +41,7 @@ class StripeController extends Controller
             'status' => 'success',
             'message' => 'Payment Success'
         ], 201);
-        $redirectUrl = 'http://localhost:4200/cart?'.http_build_query($response);
+        $redirectUrl = 'http://localhost:4200/profile/history';
         return redirect()->away($redirectUrl);
     }
 
